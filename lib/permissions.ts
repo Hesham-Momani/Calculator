@@ -1,0 +1,1 @@
+export const permissions:Record<string,string[]>={Admin:['patients','appointments','consultations','prescriptions','vitals','clinics','users'],Doctor:['consultations','prescriptions','vitals'],Nurse:['vitals'],Receptionist:['patients','appointments']};
