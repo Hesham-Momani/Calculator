@@ -1,0 +1,8 @@
+import { sqliteTable, text, integer, index, uniqueIndex } from 'drizzle-orm/sqlite-core';
+export const staff=sqliteTable('staff',{email:text('email').primaryKey(),name:text('name').notNull(),role:text('role').notNull(),status:text('status').notNull().default('Active'),department:text('department').notNull().default(''),lastLogin:text('last_login'),username:text('username'),passwordHash:text('password_hash'),passwordSalt:text('password_salt'),mustChange:integer('must_change').notNull().default(0)},t=>[uniqueIndex('idx_staff_username').on(t.username)]);
+export const records=sqliteTable('records',{id:text('id').primaryKey(),kind:text('kind').notNull(),patientId:text('patient_id'),data:text('data').notNull(),createdAt:text('created_at').notNull(),updatedAt:text('updated_at').notNull(),author:text('author').notNull()},t=>[index('idx_records_kind').on(t.kind),index('idx_records_patient').on(t.patientId)]);
+export const audit=sqliteTable('audit',{id:integer('id').primaryKey({autoIncrement:true}),actor:text('actor').notNull(),action:text('action').notNull(),recordId:text('record_id').notNull(),at:text('at').notNull()});
+
+export const sessions=sqliteTable('sessions',{tokenHash:text('token_hash').primaryKey(),email:text('email').notNull(),expiresAt:integer('expires_at').notNull()},t=>[index('idx_sessions_email').on(t.email)]);
+export const attempts=sqliteTable('login_attempts',{key:text('key').primaryKey(),count:integer('count').notNull(),expiresAt:integer('expires_at').notNull()});
+export const settings=sqliteTable('settings',{key:text('key').primaryKey(),value:text('value').notNull()});
